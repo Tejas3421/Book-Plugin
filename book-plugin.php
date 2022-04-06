@@ -158,5 +158,4 @@ function Register_Non_Hierarchical_Taxonomy_Book_tag() {
     register_taxonomy('book-tag', 'book', $options);
 }   
 
-add_action('init', 'Register_Non_Hierarchical_Taxonomy_Book_tag', 0);
-
+add_action('init', 'Register_Non_Hierarchical_Taxonomy_Book_tag',0);
