@@ -358,3 +358,116 @@ function Add_Menu_Page_book()
 }
 
 add_action('admin_menu', 'Add_Menu_Page_book');
+
+
+
+
+/**
+ * Function to diaplaying bbok details
+ */
+function Display_Book_deatils($atts, $content)
+{
+    $atts = shortcode_atts( array(
+        'id'         => 'Unknown',
+        'author_name'=> 'Unknown',
+        'year'       => 'Unknown',
+        'catagory'   => 'Unknown',
+        'tag'        => 'Unknown',
+        'publisher'  => 'Unknown'
+    ), 
+    $atts );
+
+    $content= add_filter('the_content', $content);
+
+    $content.='<div>';
+
+    $content.='ID of Book is '.$atts['id'] .'<br>';
+    $content.='Author of Book is '.$atts['author_name'] .'<br>';
+    $content.='Published Year of Book is '.$atts['year'] .'<br>';
+    $content.='Catagory of Book is '.$atts['catagory'] .'<br>';
+    $content.='Tags of Book is '.$atts['tag'] .'<br>';
+    $content.='Publisher of Book is '.$atts['publisher'] .'<br>';
+
+    $content.='</div>';
+
+    return $content;
+}
+
+/**
+ * Creating a shortcode
+ */
+function Shortcode_book($atts ,$content)
+{
+    return Display_Book_deatils($atts, $content);
+}
+
+add_shortcode('Book', 'Shortcode_book');    
+
+/**
+ * register widget
+ */
+
+function Create_Book_Catagory_widget() 
+{
+    register_widget('Book_Catagory_Widget');
+}
+
+add_action('widgets_init', 'Create_Book_Catagory_widget');
+
+
+/**
+ * class for Widget 
+ * */
+class Book_Catagory_Widget extends WP_Widget 
+{
+    /**
+     * constructor for widget class
+     */
+    public function __construct()
+    {
+        parent::__construct(
+            'book_catagory_widget', __("Book Catagory Widget"), array('description'=> __("WIdget For displaying book of same catagory"))
+        );
+    }
+
+    function widget($args, $instance)
+    {
+        $catagory = apply_filters('widget_title', $instance['catagory']);
+
+        echo $args['before_widget'];
+
+        if(!empty($instance['catagory']))
+        {
+            echo $args['before_title']. $catagory .$args['after_title'];
+        }
+
+        echo $args['after_widget'];
+    }
+
+    //widget setting
+    function form($instance)
+    {
+        if(isset($instance['catagory']))
+        {
+            $catagory= $instance['catagory'];  
+        }
+        else{
+            $catagory = __('New Catagory');
+        }
+
+        ?>
+          <div>
+                <label for='<?php echo $this->get_field_id('catagory') ?>'><?php _e("Catagory") ?></label>
+                <input class='widefat' type='text' id='<?php echo $this->get_field_id('catagory') ?>' name='<?php echo $this->get_field_name('catagory') ?>' value="<?php echo esc_attr($catagory); ?>" >
+            </div>
+        <?php
+    }
+
+    function update($new_instance, $old_instance)
+    {
+        $instance=array();
+        $instance['catagory'] =(!empty($new_instance['catagory'])) ? strip_tags($new_instance['catagory']) : "" ; 
+        return $instance; 
+    }
+
+}
