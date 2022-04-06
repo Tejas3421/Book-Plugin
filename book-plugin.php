@@ -293,3 +293,68 @@ function Save_Meta_Data_book($post_id) {
 add_action('save_post', 'Save_Meta_Data_book');
 
 
+
+/**
+ * Creating settings page for book
+ *
+ * @return void
+ */
+function Book_Setting_Page_book()
+{
+
+    if(isset($_POST['currency']) && isset($_POST['no_of_post']))
+    {
+        $currency=$_POST['currency'];
+        $no_of_post=$_POST['no_of_post'];
+
+        update_option('book_currency', $currency);
+        update_option('book_no_of_post', $no_of_post);
+    }
+    ?>
+
+    <h2>
+        Hii This is Book Setting Page
+    </h2>
+    <h4>Here you can set your currency no of post per page</h4>
+    <form>
+        <div id='currency-container'>
+            <label for='currency'>Currency</label>
+            <select id='currency' name='currency'> 
+                <option value='₹'>₹</option>
+                <option value='$'>$</option>
+                <option value='€'>€</option>
+            </select>
+        </div><br><br>
+        <div id='no_of_post'>
+            <label>No of Post Per page</label>
+            <input type='number' id='no_of_post'><br><br>
+        </div><br>
+        <input type="submit" class="button-primary" value='<?php _e('Save changes'); ?>' />
+    <form>
+
+    <?php   
+    
+}
+
+/**
+ * Adding a MEnu Page for Book
+ *
+ * @return void
+ */
+function Add_Menu_Page_book()
+{
+  //  add_menu_page('Books Setting', 'Books Setting', 'manage_options', 'book-setting-page', 'Book_Setting_Page_book');
+
+    //add_submenu_page('books', 'Books Setting', 'Books Setting', 'manage_options', 'book-setting-page', 'Book_Setting_Page_book');
+    add_submenu_page(
+        'edit.php?post_type=book', //$parent_slug
+        'Book Settings Page',  //$page_title
+        'Book Settings',        //$menu_title
+        'manage_options',           //$capability
+        'book_Settings-page', //menu slug
+        'Book_Setting_Page_book' //$function
+    );
+
+}
+
+add_action('admin_menu', 'Add_Menu_Page_book');
