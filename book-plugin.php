@@ -105,3 +105,26 @@ function Register_Custom_Post_Type_books()
 
 add_action('init', 'Register_Custom_Post_Type_books');
     
+
+
+/**
+ *  Created custom hierarchical taxonomy 
+ * **/
+function Register_Custom_Hierarchical_Taxonomy_Book_catagery() {
+
+    $labels=array(
+        'name'=>'Books Catagories',
+        'singular-name'=>'Book Catagory'
+    );
+    
+    $options = array(
+        'labels' => $labels,
+        'hierarchical'=> true,
+        'rewrite'=> array('slug' => 'book-catagory'),
+        'show_admin_column'=>true
+    );
+    
+    register_taxonomy('book-catagory', array('book'), $options);
+}
+   
+add_action('init', 'Register_Custom_Hierarchical_Taxonomy_Book_catagery', 0);
