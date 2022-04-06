@@ -159,3 +159,45 @@ function Register_Non_Hierarchical_Taxonomy_Book_tag() {
 }   
 
 add_action('init', 'Register_Non_Hierarchical_Taxonomy_Book_tag',0);
+
+
+
+/**
+ * Creating fields for Book 
+ */
+function Book_Meta_fields() 
+{
+    ?>
+    <div>  
+        
+        <label for='author-first-name'>Author First Name :</label>
+        <input id='author-first-name' type='text' value='<?php echo get_post_meta(get_the_ID(), 'Author First Name', true); ?>' name='author-first-name' ><br>
+        <label for='author-lirst-name'>Author Last Name :</label>
+        <input id='author-last-name' type='text' value='<?php echo get_post_meta(get_the_ID(), 'Author Last Name', true); ?>' name='author-last-name' ><br>
+        <label for='book-price'>Price :</label>
+        <input id='book-price' type='Integer' name='book-price' value='<?php echo get_post_meta(get_the_ID(), 'Book Price', true); ?>'><br>
+        <label for='book-publisher'>Publisher :</label>
+        <input id='book-publisher' type='text' name='book-publisher' value='<?php echo get_post_meta(get_the_ID(), 'Book Publisher', true); ?>'><br>
+        <label for='published-year'>Year :</label>
+        <input id='published-year' type='text' name='published-year' value='<?php echo get_post_meta(get_the_ID(), 'Published year', true); ?>'>  <br>
+        <label for='edition'>Edition :</label>
+        <input  id='edition' type='text' name='edition' value='<?php echo get_post_meta(get_the_ID(), 'Edition', true); ?>'><br>
+        <label for='book-url'>URL :</label>
+        <input  id='book-url' type='text' name='book-url' value='<?php echo get_post_meta(get_the_ID(), 'Book URL', true); ?>'><br>
+
+    </div>
+    <?php
+}
+
+
+/**
+ * Creating  Meta Box For Books
+ *
+ * @return void
+ */
+function Add_Book_Meta_box() 
+{
+    add_meta_box("book-meta-box", 'Book Meta Box', 'Book_Meta_fields', 'book');
+}
+
+add_action('add_meta_boxes', 'Add_Book_Meta_box');
