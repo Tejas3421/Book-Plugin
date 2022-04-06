@@ -201,3 +201,95 @@ function Add_Book_Meta_box()
 }
 
 add_action('add_meta_boxes', 'Add_Book_Meta_box');
+
+
+
+
+/**
+ * Saving the data in post meta table
+ * 
+ * @return void
+ */
+function Save_Meta_Data_book($post_id) {
+
+    //Save data for author first name
+    $field_data = $_POST['author-first-name'];
+    if(isset($_POST['author-first-name'])) {
+        if(get_post_meta($post_id, 'Author First Name', true) != '') {
+            update_post_meta($post_id, 'Author First Name', $field_data);
+        }
+        else {
+            add_post_meta($post_id, 'Author First Name', $field_data);   
+        }
+    }
+
+    //Save data for author last name
+    $field_data = $_POST['author-last-name'];
+    if(isset($_POST['author-last-name'])) {
+        if(get_post_meta($post_id, 'Author Last Name', true) != '') {
+            update_post_meta($post_id, 'Author Last Name', $field_data);
+        }
+        else {
+            add_post_meta($post_id, 'Author Last Name', $field_data);   
+        }
+    }
+
+    //save meta data for Book Price
+    $field_data = $_POST['book-price'];
+    if(isset($_POST['book-price'])) {
+        if(get_post_meta($post_id, 'Book Price', true) != '') {
+            update_post_meta($post_id, 'Book Price', $field_data);
+        }
+        else {
+            add_post_meta($post_id, 'Book Price', $field_data);   
+        }
+    }
+
+    //save meta data for book Publisher
+    $field_data = $_POST['book-publisher'];
+    if(isset($_POST['book-publisher'])) {
+        if(get_post_meta($post_id, 'Book Publisher', true) != '') {
+            update_post_meta($post_id, 'Book Publisher', $field_data);
+        }
+        else {
+            add_post_meta($post_id, 'Book Publisher', $field_data);   
+        }
+    }
+
+    //save meta data for Publisherd year
+    $field_data = $_POST['published-year'];
+    if(isset($_POST['published-year'])) {
+        if(get_post_meta($post_id, 'Published year', true) != '') {
+            update_post_meta($post_id, 'Published year', $field_data);
+        }
+        else {
+            add_post_meta($post_id, 'Published year', $field_data);   
+        }
+    }
+
+    //save meta data for Edition 
+    $field_data = $_POST['edition'];
+    if(isset($_POST['edition'])) {
+        if(get_post_meta($post_id, 'Edition', true) != '') {
+            update_post_meta($post_id, 'Edition', $field_data);
+        }
+        else {
+            add_post_meta($post_id, 'Edition', $field_data);   
+        }
+    }
+
+    //save meta data for book URl
+    $field_data = $_POST['book-url'];
+    if(isset($_POST['book-url'])) {
+        if(get_post_meta($post_id, 'Book URL', true) != '') {
+            update_post_meta($post_id, 'Book URL', $field_data);
+        }
+        else {
+            add_post_meta($post_id, 'Book URL', $field_data);   
+        }
+    }
+}
+
+add_action('save_post', 'Save_Meta_Data_book');
+
+
