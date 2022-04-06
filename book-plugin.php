@@ -128,3 +128,35 @@ function Register_Custom_Hierarchical_Taxonomy_Book_catagery() {
 }
    
 add_action('init', 'Register_Custom_Hierarchical_Taxonomy_Book_catagery', 0);
+
+
+
+
+/**
+ * Cretaing non hierarchical taxonomy 
+ *
+ * @return void
+ */
+function Register_Non_Hierarchical_Taxonomy_Book_tag() {
+
+    $labels = array(
+        'name' => 'Book Tags',
+        'singular_name' =>  'Book Tag',
+        'parent_item' => null,
+        'parent_item_colon' => null,
+        'public'=> true
+    ); 
+
+    $options=array(
+        'hierarchical' => false,
+        'labels' => $labels,
+        'show_in_rest' => true,
+        'show_admin_column' => true,
+        'rewrite' => array( 'slug' => 'book-tag' ),
+    );
+
+    register_taxonomy('book-tag', 'book', $options);
+}   
+
+add_action('init', 'Register_Non_Hierarchical_Taxonomy_Book_tag', 0);
+
